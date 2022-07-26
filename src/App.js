@@ -1,11 +1,5 @@
 import Router from './views/container/Router';
 
-function App() {
-  return (
-    <div>
-     <Router />
-    </div>
-  );
-}
+const App = () => <Router />
 
 export default App;
