@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
+import FetchApi from '../../../libs/FetchApi';
 import classes from './Login.module.scss';
 
 const Login = () => {
@@ -56,6 +57,11 @@ const Login = () => {
         password
       };
 
+      const res = await FetchApi.create('/login', payload);
+      if(!res.isError) {
+        window.sessionStorage.setItem('token', res.data.token);
+      }
+      console.log(323, res);
       // const res = await fetch('http://practica.local/api/login', {
       //   method: 'POST',
       //   headers: {
@@ -67,6 +73,11 @@ const Login = () => {
 
       // console.log(res);
     }
+  }
+
+  const _getUser = async () => {
+    const user = await FetchApi.get('/categories');
+    console.log(332, user);
   }
 
   return (
@@ -103,6 +114,7 @@ const Login = () => {
           </Form.Group>
         </div>
         <Button onClick={_login}>Login</Button>
+        <Button onClick={_getUser}>get</Button>
       </div>
     </section>
   )
