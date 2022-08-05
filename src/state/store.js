@@ -1,7 +1,7 @@
-import { createContext } from "react"
+import { createContext } from 'react';
 
 const store = createContext({
-    user: {}
+	user: {},
 });
 
 export default store;

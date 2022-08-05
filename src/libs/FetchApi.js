@@ -8,10 +8,10 @@ async function request(url, params = {}, method = 'GET') {
 			'Content-Type': 'application/json',
 		},
 	};
-	
+
 	const token = window.sessionStorage.getItem('token');
 
-	if(token) { 
+	if (token) {
 		options.headers['Authorization'] = `Bearer ${window.sessionStorage.getItem('token')}`;
 	}
 
@@ -27,7 +27,7 @@ async function request(url, params = {}, method = 'GET') {
 		const response = await fetch(endpoint, options);
 		const result = await response.json();
 
-		if(!result.status) {
+		if (!result.status) {
 			return generateErrorResponse(result);
 		}
 
@@ -48,7 +48,7 @@ function generateErrorResponse(result) {
 	return {
 		isError: true,
 		errors: result.errors,
-		message: result.message
+		message: result.message,
 	};
 }
 
@@ -68,11 +68,9 @@ const remove = (url, params) => {
 	return request(url, params, 'DELETE');
 };
 
-
-
 export default {
 	get,
 	create,
 	update,
-	remove
+	remove,
 };

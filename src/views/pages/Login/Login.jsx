@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import FetchApi from '../../../libs/FetchApi';
@@ -6,121 +6,121 @@ import store from '../../../state/store';
 import classes from './Login.module.scss';
 
 const Login = () => {
-  const {state: {user}, dispatch} = useContext(store);
-  const navigate = useNavigate();
-  console.log(user, dispatch);
+	const {
+		state: { user },
+		dispatch,
+	} = useContext(store);
+	const navigate = useNavigate();
+	console.log(user, dispatch);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  })
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [errors, setErrors] = useState({
+		email: '',
+		password: '',
+	});
 
-  const _handleChange = (e) => {
-    const { name, value } = e.target;
+	const _handleChange = (e) => {
+		const { name, value } = e.target;
 
-    if (name === 'email') {
-      setEmail(value);
-    }
+		if (name === 'email') {
+			setEmail(value);
+		}
 
-    if (name === 'password') {
-      setPassword(value);
-    }
+		if (name === 'password') {
+			setPassword(value);
+		}
 
-    if (value.length) {
-      setErrors(prev => ({ ...prev, [name]: '' }))
-    }
-  }
+		if (value.length) {
+			setErrors((prev) => ({ ...prev, [name]: '' }));
+		}
+	};
 
-  const _validate = () => {
-    let isValid = true;
-    const tmpErrors = { ...errors };
+	const _validate = () => {
+		let isValid = true;
+		const tmpErrors = { ...errors };
 
-    if (!email.length) {
-      tmpErrors.email = 'Email cannot be empty!';
-      isValid = false;
-    }
+		if (!email.length) {
+			tmpErrors.email = 'Email cannot be empty!';
+			isValid = false;
+		}
 
-    if (!password.length) {
-      tmpErrors.password = 'Password cannot be empty!';
-      isValid = false;
-    }
+		if (!password.length) {
+			tmpErrors.password = 'Password cannot be empty!';
+			isValid = false;
+		}
 
-    setErrors(tmpErrors);
+		setErrors(tmpErrors);
 
-    return isValid;
-  }
+		return isValid;
+	};
 
-  const _login = async () => {
+	const _login = async () => {
+		const isValid = _validate();
 
-    const isValid = _validate();
+		if (isValid) {
+			// make API REQUEST
+			const payload = {
+				email,
+				password,
+			};
 
-    if (isValid) {
-      // make API REQUEST
-      const payload = {
-        email,
-        password
-      };
+			const res = await FetchApi.create('/login', payload);
 
-      const res = await FetchApi.create('/login', payload);
+			if (!res.isError) {
+				window.sessionStorage.setItem('token', res.data.token);
 
-      if(!res.isError) {
-        window.sessionStorage.setItem('token', res.data.token);
-        
-        dispatch({
-          type: "SET_USER",
-          payload: res.data.user
-        });
+				dispatch({
+					type: 'SET_USER',
+					payload: res.data.user,
+				});
 
-        navigate('/dashboard');
-      }
-    }
-  }
+				navigate('/dashboard');
+			}
+		}
+	};
 
-  const _getCategories = async () => {
-    const categories = await FetchApi.get('/categories');
-    console.log(categories);
-  }
+	const _getCategories = async () => {
+		const categories = await FetchApi.get('/categories');
+		console.log(categories);
+	};
 
-  return (
-    <section>
-      <div className={classes.loginContainer}>
-        <div>
-          <Form.Group className="mb-3">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              name="email"
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              isInvalid={errors.email.length}
-              onChange={_handleChange} />
-            {!!errors.email.length && <Form.Control.Feedback type='invalid'>
-              {errors.email}
-            </Form.Control.Feedback>}
-          </Form.Group>
-        </div>
-        <div>
-          <Form.Group className="mb-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              name="password"
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              isInvalid={errors.password.length}
-              onChange={_handleChange} />
-            {!!errors.password.length && <Form.Control.Feedback type='invalid'>
-              {errors.password}
-            </Form.Control.Feedback>}
-          </Form.Group>
-        </div>
-        <Button onClick={_login}>Login</Button>
-        <Button onClick={_getCategories}>get categories</Button>
-      </div>
-    </section>
-  )
-}
+	return (
+		<section>
+			<div className={classes.loginContainer}>
+				<div>
+					<Form.Group className='mb-3'>
+						<Form.Label>Email address</Form.Label>
+						<Form.Control
+							name='email'
+							type='email'
+							placeholder='Enter email'
+							value={email}
+							isInvalid={errors.email.length}
+							onChange={_handleChange}
+						/>
+						{!!errors.email.length && <Form.Control.Feedback type='invalid'>{errors.email}</Form.Control.Feedback>}
+					</Form.Group>
+				</div>
+				<div>
+					<Form.Group className='mb-3'>
+						<Form.Label>Password</Form.Label>
+						<Form.Control
+							name='password'
+							type='password'
+							placeholder='Enter password'
+							value={password}
+							isInvalid={errors.password.length}
+							onChange={_handleChange}
+						/>
+						{!!errors.password.length && <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>}
+					</Form.Group>
+				</div>
+				<Button onClick={_login}>Login</Button>
+				<Button onClick={_getCategories}>get categories</Button>
+			</div>
+		</section>
+	);
+};
 
-export default Login
+export default Login;
