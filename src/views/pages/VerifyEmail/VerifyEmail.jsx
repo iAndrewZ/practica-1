@@ -54,17 +54,6 @@ const VerifyEmail = () => {
 				email,
 				code,
 			};
-
-			// const res = await fetch('http://practica.local/api/login', {
-			//   method: 'POST',
-			//   headers: {
-			//     "Accept": 'application/json',
-			//     "Content-Type": 'application/json'
-			//   },
-			//   body: JSON.stringify(payload)
-			// })
-
-			// console.log(res);
 		}
 	};
 

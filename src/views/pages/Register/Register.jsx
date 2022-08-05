@@ -95,7 +95,6 @@ const Register = () => {
 		navigate('/verify-email');
 	};
 
-	console.log(errors, errors.email.length);
 	return (
 		<section>
 			<div className='customForm'>

@@ -10,30 +10,34 @@ const Categories = () => {
 		perPage: 20,
 	});
 
-	// useEffect(() => {
-	//     _getCategories();
-	// }, []);
-
 	useEffect(() => {
-		_getCategories();
+		let ignore = false;
+
+		const getCategories = async () => {
+			setLoading(true);
+			const res = await FetchApi.get('/categories', { page: pagination.currentPage });
+			if (!ignore) {
+				if (!res.isError) {
+					const { data: tmpCategories, ...tmpPagination } = res.data;
+					setCategories(tmpCategories);
+					setPagination(tmpPagination);
+				}
+				setLoading(false);
+			}
+		};
+
+		getCategories();
+
+		return () => {
+			ignore = true;
+		};
 	}, [pagination.currentPage]);
 
-	const _getCategories = async () => {
-		setLoading(true);
-		const res = await FetchApi.get('/categories', { page: pagination.currentPage });
-		if (!res.isError) {
-			const { data: tmpCategories, ...tmpPagination } = res.data;
-			setCategories(tmpCategories);
-			setPagination(tmpPagination);
-		}
-		setLoading(false);
-	};
-
-	const back = () => {
+	const goToPreviousPage = () => {
 		setPagination((prev) => ({ ...prev, currentPage: prev.currentPage - 1 }));
 	};
 
-	const next = () => {
+	const goToNextPage = () => {
 		setPagination((prev) => ({ ...prev, currentPage: prev.currentPage + 1 }));
 	};
 
@@ -48,9 +52,9 @@ const Categories = () => {
 	return (
 		<div>
 			<div>
-				{pagination.currentPage > 1 && <Button onClick={back}>Prev</Button>}
+				{pagination.currentPage > 1 && <Button onClick={goToPreviousPage}>Prev</Button>}
 				<div>{pagination.currentPage}</div>
-				<Button onClick={next}>Next</Button>
+				<Button onClick={goToNextPage}>Next</Button>
 			</div>
 			<Table striped bordered hover>
 				<thead>

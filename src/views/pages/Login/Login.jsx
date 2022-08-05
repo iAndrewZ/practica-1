@@ -11,7 +11,6 @@ const Login = () => {
 		dispatch,
 	} = useContext(store);
 	const navigate = useNavigate();
-	console.log(user, dispatch);
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -80,11 +79,6 @@ const Login = () => {
 		}
 	};
 
-	const _getCategories = async () => {
-		const categories = await FetchApi.get('/categories');
-		console.log(categories);
-	};
-
 	return (
 		<section>
 			<div className={classes.loginContainer}>
@@ -117,7 +111,6 @@ const Login = () => {
 					</Form.Group>
 				</div>
 				<Button onClick={_login}>Login</Button>
-				<Button onClick={_getCategories}>get categories</Button>
 			</div>
 		</section>
 	);
