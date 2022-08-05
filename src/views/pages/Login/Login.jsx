@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import FetchApi from '../../../libs/FetchApi';
+import store from '../../../state/store';
 import classes from './Login.module.scss';
 
 const Login = () => {
+  const {state: {user}, dispatch} = useContext(store);
+  const navigate = useNavigate();
+  console.log(user, dispatch);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
@@ -58,26 +64,23 @@ const Login = () => {
       };
 
       const res = await FetchApi.create('/login', payload);
+
       if(!res.isError) {
         window.sessionStorage.setItem('token', res.data.token);
-      }
-      console.log(323, res);
-      // const res = await fetch('http://practica.local/api/login', {
-      //   method: 'POST',
-      //   headers: {
-      //     "Accept": 'application/json',
-      //     "Content-Type": 'application/json'
-      //   },
-      //   body: JSON.stringify(payload)
-      // })
+        
+        dispatch({
+          type: "SET_USER",
+          payload: res.data.user
+        });
 
-      // console.log(res);
+        navigate('/dashboard');
+      }
     }
   }
 
-  const _getUser = async () => {
-    const user = await FetchApi.get('/categories');
-    console.log(332, user);
+  const _getCategories = async () => {
+    const categories = await FetchApi.get('/categories');
+    console.log(categories);
   }
 
   return (
@@ -114,7 +117,7 @@ const Login = () => {
           </Form.Group>
         </div>
         <Button onClick={_login}>Login</Button>
-        <Button onClick={_getUser}>get</Button>
+        <Button onClick={_getCategories}>get categories</Button>
       </div>
     </section>
   )

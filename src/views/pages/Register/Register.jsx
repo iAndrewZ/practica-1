@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import FetchApi from '../../../libs/FetchApi';
+import store from '../../../state/store';
 import classes from './Register.module.scss';
 
 
 const Register = () => {
+  const {state: {user}} = useContext(store);
 
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -81,21 +84,13 @@ const Register = () => {
 
     // make API REQUEST
     const payload = {
+      name: username,
       email,
-      password
+      password,
+      password_confirmation: confirmPassword
     };
     
-
-    // const res = await fetch('http://practica.local/api/login', {
-    //   method: 'POST',
-    //   headers: {
-    //     "Accept": 'application/json',
-    //     "Content-Type": 'application/json'
-    //   },
-    //   body: JSON.stringify(payload)
-    // })
-
-    // console.log(res);
+    const res = await FetchApi.create('/register', payload);
 
     navigate('/verify-email')
   }
@@ -119,6 +114,7 @@ const Register = () => {
               </Form.Control.Feedback>}
             </Form.Group>
           </div>
+
           <div>
             <Form.Group className="mb-3">
               <Form.Label>Email address</Form.Label>
