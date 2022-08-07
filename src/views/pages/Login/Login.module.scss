@@ -1,2 +1,9 @@
-.loginContainer {
+.loginBtnContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2rem;
+	button {
+		padding: 0.5rem 1.5rem;
+	}
 }

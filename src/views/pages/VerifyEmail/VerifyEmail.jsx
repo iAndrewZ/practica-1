@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
+import FetchApi from '../../../libs/FetchApi';
 
 const VerifyEmail = () => {
 	const [email, setEmail] = useState('');
 	const [code, setCode] = useState('');
+
+	const navigate = useNavigate('');
 
 	const [errors, setErrors] = useState({
 		email: '',
@@ -54,6 +58,12 @@ const VerifyEmail = () => {
 				email,
 				code,
 			};
+
+			const res = await FetchApi.create('/verify-email', payload);
+
+			if (!res.isError) {
+				return navigate('/login');
+			}
 		}
 	};
 

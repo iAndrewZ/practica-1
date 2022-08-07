@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FetchApi from '../../../libs/FetchApi';
 import store from '../../../state/store';
 import classes from './Login.module.scss';
+import reusable from '../../resources/css/Reusable.module.scss';
 
 const Login = () => {
 	const {
@@ -80,37 +81,44 @@ const Login = () => {
 	};
 
 	return (
-		<section>
+		<section className={reusable.mainContainer}>
 			<div className={classes.loginContainer}>
-				<div>
-					<Form.Group className='mb-3'>
-						<Form.Label>Email address</Form.Label>
-						<Form.Control
-							name='email'
-							type='email'
-							placeholder='Enter email'
-							value={email}
-							isInvalid={errors.email.length}
-							onChange={_handleChange}
-						/>
-						{!!errors.email.length && <Form.Control.Feedback type='invalid'>{errors.email}</Form.Control.Feedback>}
-					</Form.Group>
+				<div className={reusable.containerContent}>
+					<div className={reusable.formTitle}>
+						<h1>Login</h1>
+					</div>
+					<div>
+						<Form.Group className='mb-3'>
+							<Form.Label>Email address</Form.Label>
+							<Form.Control
+								name='email'
+								type='email'
+								placeholder='Enter email'
+								value={email}
+								isInvalid={errors.email.length}
+								onChange={_handleChange}
+							/>
+							{!!errors.email.length && <Form.Control.Feedback type='invalid'>{errors.email}</Form.Control.Feedback>}
+						</Form.Group>
+					</div>
+					<div>
+						<Form.Group className='mb-3'>
+							<Form.Label>Password</Form.Label>
+							<Form.Control
+								name='password'
+								type='password'
+								placeholder='Enter password'
+								value={password}
+								isInvalid={errors.password.length}
+								onChange={_handleChange}
+							/>
+							{!!errors.password.length && <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>}
+						</Form.Group>
+					</div>
+					<div className={classes.loginBtnContainer}>
+						<Button onClick={_login}>Login</Button>
+					</div>
 				</div>
-				<div>
-					<Form.Group className='mb-3'>
-						<Form.Label>Password</Form.Label>
-						<Form.Control
-							name='password'
-							type='password'
-							placeholder='Enter password'
-							value={password}
-							isInvalid={errors.password.length}
-							onChange={_handleChange}
-						/>
-						{!!errors.password.length && <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>}
-					</Form.Group>
-				</div>
-				<Button onClick={_login}>Login</Button>
 			</div>
 		</section>
 	);

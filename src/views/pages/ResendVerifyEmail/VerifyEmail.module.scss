@@ -1,0 +1,16 @@
+.anno {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 2rem;
+	div {
+		text-align: center;
+	}
+}
+@media screen and (max-width: 500px) {
+	.anno {
+		transition: 0.3s;
+		font-size: 0.95rem;
+	}
+}
