@@ -19,10 +19,14 @@
 	flex-direction: column;
 	-webkit-box-shadow: -1px 0px 9px -3px #000000;
 	box-shadow: -1px 0px 9px -3px #000000;
+	p{
+		margin: 1rem 0;
+	}
+
 }
 
 .btns {
 	button {
-		margin: 0 0.5rem;
+		margin: 1rem 0.5rem;
 	}
 }

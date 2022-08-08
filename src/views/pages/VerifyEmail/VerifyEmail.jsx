@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import FetchApi from '../../../libs/FetchApi';
+import reusable from "../../resources/css/Reusable.module.scss"
 
 const VerifyEmail = () => {
 	const [email, setEmail] = useState('');
@@ -68,7 +69,8 @@ const VerifyEmail = () => {
 	};
 
 	return (
-		<div>
+		<div className={reusable.mainContainer}>
+			<div className={reusable.containerContent}>
 			<div>
 				<Form.Group className='mb-3'>
 					<Form.Label>Email address</Form.Label>
@@ -97,8 +99,9 @@ const VerifyEmail = () => {
 					{!!errors.code.length && <Form.Control.Feedback type='invalid'>{errors.code}</Form.Control.Feedback>}
 				</Form.Group>
 			</div>
-			<div>
+			<div className={reusable.btnContainer}>
 				<Button onClick={_verify}>Verify Email</Button>
+			</div>
 			</div>
 		</div>
 	);
