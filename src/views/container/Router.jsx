@@ -13,6 +13,7 @@ import Register from '../pages/Register';
 import VerifyEmail from '../pages/VerifyEmail';
 import ResendVerifyEmail from '../pages/ResendVerifyEmail/ResendVerifyEmail';
 import Category from '../pages/Categories/Category/Category';
+import CreateCategory from '../pages/Categories/CreateCategory/CreateCategory';
 
 const Router = () => {
 	return (
@@ -30,6 +31,7 @@ const Router = () => {
 					<Route path='profile' element={<Profile />} />
 					<Route path='categories' index element={<Categories />} />
 					<Route path='categories/:id' element={<Category />} />
+					<Route path='createcategory' element={<CreateCategory />} />
 				</Route>
 				<Route path='*' element={<NotFound />} />
 			</Routes>

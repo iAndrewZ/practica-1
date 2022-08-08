@@ -2,14 +2,16 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	background: linear-gradient(197deg, rgba(255, 255, 255, 1) 0%, rgba(228, 228, 228, 1) 95%);
 	justify-content: center;
 	height: 100vh;
 	width: 100%;
 }
 .categoryContainer {
+	position: relative;
 	border: 1px solid black;
-	width: 15rem;
-	height: 15rem;
+	width: 25rem;
+	height: 25rem;
 	border-radius: 20px;
 	display: flex;
 	align-items: center;
@@ -17,4 +19,10 @@
 	flex-direction: column;
 	-webkit-box-shadow: -1px 0px 9px -3px #000000;
 	box-shadow: -1px 0px 9px -3px #000000;
+}
+
+.btns {
+	button {
+		margin: 0 0.5rem;
+	}
 }

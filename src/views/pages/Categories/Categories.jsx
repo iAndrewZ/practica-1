@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Spinner, Table } from 'react-bootstrap';
 import FetchApi from '../../../libs/FetchApi';
 import classes from './Categories.module.scss';
@@ -11,6 +12,7 @@ const Categories = () => {
 		currentPage: 1,
 		perPage: 10,
 	});
+	const navigate = useNavigate();
 
 	const dropDown = useRef();
 
@@ -72,7 +74,11 @@ const Categories = () => {
 							</thead>
 							<tbody>
 								{categories?.map((category) => (
-									<tr key={category.id}>
+									<tr
+										key={category.id}
+										className={classes.clickrow}
+										onClick={() => navigate(`/dashboard/categories/${category.id}`)}
+									>
 										<td>{category.id}</td>
 										<td>{category.name}</td>
 										<td>{category.parent_id || '-'}</td>
@@ -88,6 +94,9 @@ const Categories = () => {
 						<div>
 							{pagination.currentPage > 1 && <Button onClick={goToPreviousPage}>Prev</Button>}
 							<Button onClick={goToNextPage}>Next</Button>
+						</div>
+						<div>
+							<Button onClick={() => navigate('/dashboard/createcategory')}>Create category</Button>
 						</div>
 					</div>
 				</>
